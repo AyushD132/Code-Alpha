@@ -1,1 +1,93 @@
+//libraries
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Function to encrypt text using Caesar cipher
+
+string encrypt(const string& text, int shift) {
+    string result = "";
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = islower(c) ? 'a' : 'A'; // Determine base of alphabet (lowercase or uppercase)
+            char shifted = (c - base + shift) % 26 + base; // Apply Caesar cipher shift
+            result += shifted; 
+        }
+        else {
+            result += c; // Non-alphabetic characters remain unchanged
+        }
+    }
+    return result; // Return encrypted text
+}
+// same for decryption just change is that instead of adding c- base to shift here in decryption it is subtracted .
+// Function to decrypt text using Caesar cipher
+
+string decrypt(const string& text, int shift) {
+    string result = "";
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = islower(c) ? 'a' : 'A'; // Determine base of alphabet (lowercase or uppercase)
+            char shifted = (c - base - shift + 26) % 26 + base; // Apply Caesar cipher shift
+            result += shifted; 
+        }
+        else {
+            result += c; // Non-alphabetic characters remain unchanged
+        }
+    }
+    return result; // Return decrypted text
+}
+// below to select whether to encrypt or decrypt or to end the task
+int main() {
+    char choice;
+
+    do {
+        string text;
+        int shift;
+
+        // Prompt user for choice
+        cout << "Do you want to encrypt (E), decrypt (D) or quit (Q)? ";
+        cin >> choice;
+
+        // Process user's choice
+        if (tolower(choice) == 'e') {
+            // Encryption
+            cout << "Enter the text to encrypt: ";
+            cin.ignore(); // Clear input buffer
+            getline(cin, text);
+
+            cout << "Enter the shift value for encryption: ";
+            cin >> shift;
+
+            // Encrypt text
+            string encrypted_text = encrypt(text, shift);
+            cout << "Encrypted text: " << encrypted_text << endl;
+        }
+        else if (tolower(choice) == 'd') {
+            // Decryption
+            cout << "Enter the text to decrypt: ";
+            cin.ignore(); // Clear input buffer
+            getline(cin, text);
+
+            cout << "Enter the shift value for decryption: ";
+            cin >> shift;
+
+            // Decrypt text
+            string decrypted_text = decrypt(text, shift);
+            cout << "Decrypted text: " << decrypted_text << endl;
+        }
+        else if (tolower(choice) == 'q') {
+            // Quitting
+            cout << "Exiting the program..." << endl;
+            break; // Exit loop and program
+        }
+        else {
+            // Invalid choice
+            cout << "Invalid choice. Please choose 'E', 'D', or 'Q'." << endl;
+        }
+    } while (true); // Repeat loop until user chooses to quit
+
+    return 0; //indicate successful execution
+}
 
